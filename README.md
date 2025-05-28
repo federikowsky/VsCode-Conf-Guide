@@ -28,7 +28,11 @@ Installa le seguenti estensioni per abilitare il supporto completo Java e l’in
 
 ## Configurazione Java
 
-### 1. Impostazione del JDK
+### Pre-requisiti
+Cancellare i file .classpath e .project se presenti nella root del progetto, per evitare conflitti con le nuove configurazioni.
+Se VsCode non riconosce il progetto come Java, basta aprire un file `.java` e attendere che l'estensione Java lo riconosca e configuri automaticamente il progetto. 
+
+### Impostazione del JDK
 
 > ⚠️ **Nota:**  
 > Il runtime RSP richiede almeno Java 11 per funzionare correttamente.  
@@ -41,6 +45,8 @@ Puoi configurare il JDK in diversi modi:
   
   ![GUI JDK Runtime](resources/record/add_jdk.gif)
 - **Da `settings.json` (consigliato per portabilità):**
+
+  Apri il file *settings.json* del tuo progetto tramite la Command Palette *(Preferences: Open User Settings (JSON))* e aggiungi queste configurazioni:
 
   ```json
   "java.jdt.ls.java.home": "/percorso/alla/tua/JDK/Contents/Home",
@@ -65,8 +71,8 @@ Puoi configurare il JDK in diversi modi:
   "rsp-ui.rsp.java.home": "/percorso/alla/tua/JDK/Contents/Home"
   ```
 
-- Se lavori con più progetti che utilizzano versioni diverse di Java, **è sconsigliato configurare il JDK a livello utente** nel `settings.json`.  
-  In questi casi, è preferibile impostare il JDK a livello di workspace tramite le impostazioni di VSCode o la GUI, per garantire coerenza e flessibilità.
+- Nota: Se lavori su più progetti che richiedono versioni diverse di Java, evita di impostare il JDK a livello utente nel *settings.json*.
+In questi casi, è meglio configurare il JDK a livello di workspace (tramite *Preferences: Open Workspace Settings (JSON)* o tramite l’interfaccia grafica di VSCode) per mantenere coerenza e flessibilità tra i diversi progetti.
 
 
 ## Configurazione Tomcat
@@ -94,6 +100,17 @@ Puoi configurare il JDK in diversi modi:
 
 7. **Aggiungi il deployment**:  
    Clicca su `Add Deployment` nel server e seleziona il file `.war` del progetto o la cartella `WebContent`.
+
+## Configurazione Classpath
+Per aggiungere le librerie necessarie al classpath del progetto, aggiornare la variabile `java.project.referencedLibraries` nel file `settings.json` del progetto. Esempio:
+
+```json
+"java.project.referencedLibraries": [
+  "WebContent/WEB-INF/lib/**/*.jar",
+  "/path/di/apache-tomcat-X/lib/**/*.jar"
+  "/path/delle/librerie/aggiuntive/**/*.jar"
+]
+```
 
 
 ## Parametri di Deployment
